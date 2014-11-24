@@ -4,7 +4,10 @@ FROM ubuntu:14.04
 ENV HOME /root
 
 # install ruby
-RUN apt-get update -qq && apt-get install -y -qq ruby-dev make
+RUN apt-get update -qq && \
+    apt-get install -y -qq ruby-dev make && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # install capistrano
 RUN gem install --no-rdoc --no-ri capistrano -v 3.2.1
