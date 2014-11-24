@@ -12,4 +12,7 @@ RUN apt-get update -qq && \
 # install capistrano
 RUN gem install --no-rdoc --no-ri capistrano -v 3.2.1
 
+# install deps
+RUN gem install --no-rdoc --no-ri capistrano-symfony -v 0.4.0
+
 WORKDIR /srv
