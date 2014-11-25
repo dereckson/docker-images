@@ -3,9 +3,9 @@ FROM ubuntu:14.04
 
 ENV HOME /root
 
-# install ruby
+# install deps
 RUN apt-get update -qq && \
-    apt-get install -y -qq ruby-dev make && \
+    apt-get install -y -qq ruby-dev make ssh && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
