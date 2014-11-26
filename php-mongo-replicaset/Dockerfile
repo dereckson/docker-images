@@ -13,6 +13,9 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y mongodb-org
 RUN echo "y\ny" | pecl install apcu-beta
 ADD php/apcu.ini /usr/local/etc/php/conf.d/apcu.ini
 
+# install composer
+RUN wget -O /usr/local/bin/composer -q http://getcomposer.org/composer.phar
+
 # Compact docker
 RUN apt-get clean -y  && rm -rf /tmp/pear/*
 
