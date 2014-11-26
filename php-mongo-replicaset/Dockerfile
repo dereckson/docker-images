@@ -14,7 +14,7 @@ RUN echo "y\ny" | pecl install apcu-beta
 ADD php/apcu.ini /usr/local/etc/php/conf.d/apcu.ini
 
 # install composer
-RUN wget -O /usr/local/bin/composer -q http://getcomposer.org/composer.phar
+RUN cd /usr/local/bin/ && curl -sS https://getcomposer.org/installer | php
 
 # Compact docker
 RUN apt-get clean -y  && rm -rf /tmp/pear/*
