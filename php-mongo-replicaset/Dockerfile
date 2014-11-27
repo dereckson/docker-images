@@ -7,11 +7,13 @@ ADD php/mongo.ini /usr/local/etc/php/conf.d/mongo.ini
 # Add 10gen official apt source to the sources list
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 RUN echo 'deb http://downloads-distro.mongodb.org/repo/debian-sysvinit dist 10gen' | tee /etc/apt/sources.list.d/mongodb.list
-# Install MongoDB
-RUN apt-get update && apt-get upgrade -y && apt-get install -y mongodb-org
+# Install MongoDB and dependencies for intl extension
+RUN apt-get update && apt-get upgrade -y && apt-get install -y mongodb-org libicu-dev g++ sudo
 
 RUN echo "y\ny" | pecl install apcu-beta
 ADD php/apcu.ini /usr/local/etc/php/conf.d/apcu.ini
+RUN docker-php-ext-install bcmath mbstring opcache intl pcntl
+ADD php/opcache.ini /usr/local/etc/php/conf.d/ext-opcache.ini
 
 # install composer
 RUN cd /usr/local/bin/ && curl -sS https://getcomposer.org/installer | php
