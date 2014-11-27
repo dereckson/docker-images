@@ -8,7 +8,7 @@ ADD php/mongo.ini /usr/local/etc/php/conf.d/mongo.ini
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 RUN echo 'deb http://downloads-distro.mongodb.org/repo/debian-sysvinit dist 10gen' | tee /etc/apt/sources.list.d/mongodb.list
 # Install MongoDB and dependencies for intl and zip extensions
-RUN apt-get update && apt-get upgrade -y && apt-get install -y mongodb-org libicu-dev g++ sudo zlib1g-dev
+RUN apt-get update && apt-get upgrade -y && apt-get install -y mongodb-org libicu-dev g++ sudo zlib1g-dev git
 
 RUN echo "y\ny" | pecl install apcu-beta
 ADD php/apcu.ini /usr/local/etc/php/conf.d/apcu.ini
