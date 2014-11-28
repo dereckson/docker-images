@@ -21,6 +21,8 @@ RUN cd /usr/local/bin/ && curl -sS https://getcomposer.org/installer | php
 # Compact docker
 RUN apt-get clean -y  && rm -rf /tmp/pear/*
 
+ADD sudo/sudoers /etc/sudoers
+
 CMD /usr/bin/mongod --smallfiles --dbpath /var/lib/mongodb/ --replSet rs1 --logpath /var/log/mongodb/mongodb.log --fork && \
     /usr/bin/mongo --eval 'rs.initiate();' && \
     /data/bin/phpunit -c /data/app/
