@@ -1,7 +1,7 @@
 FROM php:5.5-cli
 
 ADD php/php.ini /usr/local/etc/php/php.ini
-RUN pecl install mongo
+RUN pecl install mongo-1.5.8
 ADD php/mongo.ini /usr/local/etc/php/conf.d/mongo.ini
 
 # Add 10gen official apt source to the sources list
