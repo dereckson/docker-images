@@ -6,7 +6,7 @@ ADD php/php.ini /usr/local/etc/php/php.ini
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 RUN echo "deb http://repo.mongodb.org/apt/debian wheezy/mongodb-org/3.0 main" | tee /etc/apt/sources.list.d/mongodb-org-3.0.list
 # Install MongoDB and dependencies for intl and zip extensions
-RUN apt-get update && apt-get upgrade -y && apt-get install -y mongodb-org libicu-dev g++ sudo zlib1g-dev git libssl-dev
+RUN apt-get update && apt-get upgrade -y && apt-get install -y mongodb-org libicu-dev g++ sudo zlib1g-dev git libssl-dev wget
 
 RUN echo "y\ny" | pecl install apcu-beta
 ADD php/apcu.ini /usr/local/etc/php/conf.d/apcu.ini
@@ -18,8 +18,16 @@ ADD php/mongo.ini /usr/local/etc/php/conf.d/mongo.ini
 # install composer
 RUN cd /usr/local/bin/ && curl -sS https://getcomposer.org/installer | php
 
+# This dockerfile is ugly with so many dependencies. Next time, we will use docker composer
+RUN wget -qO - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | sudo apt-key add - && \
+    echo 'deb http://packages.elasticsearch.org/elasticsearch/1.7/debian stable main' \
+      | tee /etc/apt/sources.list.d/elasticsearch.list && \
+    apt-get update && \
+    apt-get install --no-install-recommends -y elasticsearch openjdk-7-jre-headless && \
+    /usr/share/elasticsearch/bin/plugin -install elasticsearch/elasticsearch-analysis-icu/2.7.0
+
 # Compact docker
-RUN apt-get clean -y  && rm -rf /tmp/pear/*
+RUN apt-get clean -y  && rm -rf /tmp/pear/* && rm -rf /var/lib/apt/lists/*
 
 ADD sudo/sudoers /etc/sudoers
 
