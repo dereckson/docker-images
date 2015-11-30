@@ -8,7 +8,7 @@ RUN echo "deb http://repo.mongodb.org/apt/debian wheezy/mongodb-org/3.0 main" | 
 # Install MongoDB and dependencies for intl and zip extensions
 RUN apt-get update && apt-get upgrade -y && apt-get install -y mongodb-org libicu-dev g++ sudo zlib1g-dev git libssl-dev wget
 
-RUN echo "y\ny" | pecl install apcu-beta
+RUN echo "y\ny" | pecl install apcu
 ADD php/apcu.ini /usr/local/etc/php/conf.d/apcu.ini
 RUN docker-php-ext-install bcmath mbstring opcache intl pcntl zip
 ADD php/opcache.ini /usr/local/etc/php/conf.d/ext-opcache.ini
